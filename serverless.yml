@@ -1,0 +1,28 @@
+service: API-REST-5HEAD
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-3
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "rds:*"
+      Resource: "*"
+  vpc:
+    securityGroupIds:
+      - sg-xxxxxxxx
+    subnetIds:
+      - subnet-xxxxxxx
+      - subnet-yyyyyyy
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi: '*'
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
